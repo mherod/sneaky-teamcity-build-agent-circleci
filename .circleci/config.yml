@@ -1,0 +1,50 @@
+version: 2
+references:
+  cache_key_dependencies: &cache_key_dependencies
+    key: deps-cache
+  cache_key_build: &cache_key_build
+    key: build-cache
+  restore_cache_dependencies: &restore_cache_dependencies
+    restore_cache:
+      <<: *cache_key_dependencies
+  restore_cache_build: &restore_cache_build
+    restore_cache:
+      <<: *cache_key_build
+  save_cache_dependencies: &save_cache_dependencies
+    save_cache:
+      <<: *cache_key_dependencies
+      paths:
+        - ~/.m2
+        - ~/.gradle
+  save_cache_build: &save_cache_build
+    save_cache:
+      <<: *cache_key_build
+      paths:
+        - ~/workspace/buildAgent
+  workspace: &workspace ~/workspace
+  android_config: &android_config
+    working_directory: *workspace
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      TERM: dumb
+      JVM_OPTS: "-Xmx3200m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3200m"'
+jobs:
+  build:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_cache_dependencies
+      - *restore_cache_build
+      - run:
+          name: Run build agent
+          command: bash ~/workspace/startBuildAgent.sh
+          when: always
+      - *save_cache_dependencies
+      - *save_cache_build
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
