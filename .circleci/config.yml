@@ -38,6 +38,9 @@ jobs:
       - *restore_cache_dependencies
       - *restore_cache_build
       - run:
+          name: Apply build agent authorisation token
+          command: echo 'authorizationToken=${TEAMCITY_AGENT_AUTH_TOKEN}' >> $BUILD_AGENT_DIR/conf/buildAgent.properties
+      - run:
           name: Run build agent
           command: bash ~/workspace/startBuildAgent.sh
           when: always
