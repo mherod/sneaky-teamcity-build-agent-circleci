@@ -46,9 +46,9 @@ jobs:
       - run: rm buildAgent.zip
       - run: cat ${HOME}/workspace/buildAgent.properties > $BUILD_AGENT_DIR/conf/buildAgent.properties
       - run: echo 'authorizationToken=${TEAMCITY_AGENT_AUTH_TOKEN}' >> $BUILD_AGENT_DIR/conf/buildAgent.properties
-      - run: nohup bash $BUILD_AGENT_DIR/bin/agent.sh start &
-      - run: until tail -F $BUILD_AGENT_DIR/logs/teamcity-agent.log ; do sleep 1 ; done
-      - run: while tail -F $BUILD_AGENT_DIR/logs/teamcity-agent.log ; do sleep 1 ; done
+      - run: nohup bash $BUILD_AGENT_DIR/bin/agent.sh run &
+      - run: until find $BUILD_AGENT_DIR -name "teamcity-agent.log" ; do sleep 1 ; done
+      - run: until tail -f $BUILD_AGENT_DIR/logs/teamcity-agent.log ; do sleep 0 ; done
       - *save_cache_dependencies
       - *save_cache_build
 workflows:
