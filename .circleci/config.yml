@@ -20,7 +20,7 @@ references:
     save_cache:
       <<: *cache_key_build
       paths:
-        - ~/workspace/buildAgent
+        - /home/circleci/workspace/buildAgent
   workspace: &workspace ~/workspace
   android_config: &android_config
     working_directory: *workspace
