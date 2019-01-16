@@ -49,7 +49,7 @@ jobs:
       - run: echo 'authorizationToken=${TEAMCITY_AGENT_AUTH_TOKEN}' >> $BUILD_AGENT_DIR/conf/buildAgent.properties
       - *save_cache_dependencies
       - *save_cache_build
-      - run: nohup bash $BUILD_AGENT_DIR/bin/agent.sh run ; tail -f nohup.out & ; sleep 3000 ; exit
+      - run: nohup bash $BUILD_AGENT_DIR/bin/agent.sh run ; tail -F nohup.out
       - *save_cache_dependencies
       - *save_cache_build
 workflows:
