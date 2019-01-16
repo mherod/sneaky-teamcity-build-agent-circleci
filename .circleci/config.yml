@@ -41,8 +41,8 @@ jobs:
       - run: wget --quiet ${SERVER_HOST}/update/buildAgent.zip
       - run: mkdir -p -v $BUILD_AGENT_DIR
       - run: unzip -o buildAgent.zip -d $BUILD_AGENT_DIR
-      - run: stat $BUILD_AGENT_DIR
-      - run: stat $BUILD_AGENT_DIR/../
+      - run: ls $BUILD_AGENT_DIR
+      - run: ls $BUILD_AGENT_DIR/../
       - run: rm buildAgent.zip
       - run: cat ${HOME}/workspace/buildAgent.properties > $BUILD_AGENT_DIR/conf/buildAgent.properties
       - run: echo 'authorizationToken=${TEAMCITY_AGENT_AUTH_TOKEN}' >> $BUILD_AGENT_DIR/conf/buildAgent.properties
