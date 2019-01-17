@@ -49,7 +49,7 @@ jobs:
       - run: echo 'authorizationToken=${TEAMCITY_AGENT_AUTH_TOKEN}' >> $BUILD_AGENT_DIR/conf/buildAgent.properties
       - *save_cache_dependencies
       - *save_cache_build
-      - run: while bash $BUILD_AGENT_DIR/bin/agent.sh run | grep "INFO" || true ; do sleep 0 ; done
+      - run: while bash $BUILD_AGENT_DIR/bin/agent.sh run | cat || true ; do sleep 0 ; done
       - *save_cache_dependencies
       - *save_cache_build
 workflows:
